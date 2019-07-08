@@ -2,27 +2,17 @@
     "nbformat_minor": 2, 
     "cells": [
         {
-            "source": "<h1>Analyzing US Economic Data and  Building a Dashboard  </h1>\n\n", 
+            "source": "# <h1>Analyzing US Economic Data and  Building a Dashboard  </h1>\n\n", 
             "cell_type": "markdown", 
             "metadata": {}
         }, 
         {
-            "source": "<h2>Table of Contents</h2>\n<div class=\"alert alert-block alert-info\" style=\"margin-top: 20px\">\n    <ul>\n        <li><a href=\"#Section_1\"> Define a Function that Makes a Dashboard </a></li>\n    <li><a href=\"#Section_2\">Question 1: Create a dataframe that contains the GDP data and display it</a> </li>\n    <li><a href=\"#Section_3\">Question 2: Create a dataframe that contains the unemployment data and display it</a></li>\n    <li><a href=\"#Section_4\">Question 3: Display a dataframe where unemployment was greater than 8.5%</a></li>\n    <li><a href=\"#Section_5\">Question 4: Use the function make_dashboard to make a dashboard</a></li>\n     <li><a href=\"#Section_6\">Question 5: Save the dashboard on IBM cloud and display it</a></li>\n    </ul>\n<p>\n    Estimated Time Needed: <strong>180 min</strong></p>\n</div>\n\n<hr>", 
+            "source": "Import Libraries", 
             "cell_type": "markdown", 
             "metadata": {}
         }, 
         {
-            "source": "<h2 id=\"Section_1\"> Define Function that Makes a Dashboard  </h2>", 
-            "cell_type": "markdown", 
-            "metadata": {}
-        }, 
-        {
-            "source": "We will import the following libraries.", 
-            "cell_type": "markdown", 
-            "metadata": {}
-        }, 
-        {
-            "source": "import pandas as pd\nfrom bokeh.plotting import figure, output_file, show,output_notebook\noutput_notebook()", 
+            "execution_count": 1, 
             "cell_type": "code", 
             "metadata": {}, 
             "outputs": [
@@ -42,244 +32,219 @@
                     "metadata": {}
                 }
             ], 
-            "execution_count": 1
+            "source": "import pandas as pd\nfrom bokeh.plotting import figure, output_file, show,output_notebook\noutput_notebook()"
         }, 
         {
-            "source": "In this section, we define the function <code>make_dashboard</code>. \nYou don't have to know how the function works, you should only care about the inputs. The function will produce a dashboard as well as an html file. You can then use this html file to share your dashboard. If you do not know what an html file is don't worry everything you need to know will be provided in the lab. ", 
+            "source": "Define the Dashboard function", 
             "cell_type": "markdown", 
             "metadata": {}
         }, 
         {
-            "source": "def make_dashboard(x, gdp_change, unemployment, title, file_name):\n    output_file(file_name)\n    p = figure(title=title, x_axis_label='year', y_axis_label='%')\n    p.line(x.squeeze(), gdp_change.squeeze(), color=\"firebrick\", line_width=4, legend=\"% GDP change\")\n    p.line(x.squeeze(), unemployment.squeeze(), line_width=4, legend=\"% unemployed\")\n    show(p)", 
+            "execution_count": 2, 
             "cell_type": "code", 
             "metadata": {}, 
             "outputs": [], 
-            "execution_count": 2
+            "source": "def make_dashboard(x, gdp_change, unemployment, title, file_name):\n    output_file(file_name)\n    p = figure(title=title, x_axis_label='year', y_axis_label='%')\n    p.line(x.squeeze(), gdp_change.squeeze(), color=\"firebrick\", line_width=4, legend=\"% GDP change\")\n    p.line(x.squeeze(), unemployment.squeeze(), line_width=4, legend=\"% unemployed\")\n    show(p)"
         }, 
         {
-            "source": "The dictionary  <code>links</code> contain the CSV files with all the data. The value for the key <code>GDP</code> is the file that contains the GDP data. The value for the key <code>unemployment</code> contains the unemployment data.", 
+            "source": "Create Dictionary that contain Data link", 
             "cell_type": "markdown", 
             "metadata": {}
         }, 
         {
-            "source": "links={'GDP':'https://s3-api.us-geo.objectstorage.softlayer.net/cf-courses-data/CognitiveClass/PY0101EN/projects/coursera_project/clean_gdp.csv',\\\n       'unemployment':'https://s3-api.us-geo.objectstorage.softlayer.net/cf-courses-data/CognitiveClass/PY0101EN/projects/coursera_project/clean_unemployment.csv'}", 
+            "execution_count": 3, 
             "cell_type": "code", 
             "metadata": {}, 
             "outputs": [], 
-            "execution_count": 3
+            "source": "links={'GDP':'https://s3-api.us-geo.objectstorage.softlayer.net/cf-courses-data/CognitiveClass/PY0101EN/projects/coursera_project/clean_gdp.csv',\\\n       'unemployment':'https://s3-api.us-geo.objectstorage.softlayer.net/cf-courses-data/CognitiveClass/PY0101EN/projects/coursera_project/clean_unemployment.csv'}"
         }, 
         {
-            "source": "<h3 id=\"Section_2\"> Question 1: Create a dataframe that contains the GDP data and display the first five rows of the dataframe.</h3>", 
+            "source": "Creating the dafaframe that contains GDP Data and read.", 
             "cell_type": "markdown", 
             "metadata": {}
         }, 
         {
-            "source": "Use the dictionary <code>links</code> and the function <code>pd.read_csv</code> to create a Pandas dataframes that contains the GDP data.", 
-            "cell_type": "markdown", 
-            "metadata": {}
-        }, 
-        {
-            "source": "<b>Hint: <code>links[\"GDP\"]</code> contains the path or name of the file.</b>", 
-            "cell_type": "markdown", 
-            "metadata": {}
-        }, 
-        {
-            "source": "df = pd.read_csv(links[\"GDP\"])\n", 
+            "execution_count": 4, 
             "cell_type": "code", 
             "metadata": {}, 
             "outputs": [], 
-            "execution_count": 4
+            "source": "df = pd.read_csv(links[\"GDP\"])\n"
         }, 
         {
-            "source": "Use the method <code>head()</code> to display the first five rows of the GDP data, then take a screen-shot.", 
+            "source": "Display first five rows", 
             "cell_type": "markdown", 
             "metadata": {}
         }, 
         {
-            "source": "df.head()", 
+            "execution_count": 5, 
             "cell_type": "code", 
             "metadata": {}, 
             "outputs": [
                 {
-                    "output_type": "execute_result", 
+                    "execution_count": 5, 
+                    "metadata": {}, 
                     "data": {
                         "text/html": "<div>\n<style scoped>\n    .dataframe tbody tr th:only-of-type {\n        vertical-align: middle;\n    }\n\n    .dataframe tbody tr th {\n        vertical-align: top;\n    }\n\n    .dataframe thead th {\n        text-align: right;\n    }\n</style>\n<table border=\"1\" class=\"dataframe\">\n  <thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>date</th>\n      <th>level-current</th>\n      <th>level-chained</th>\n      <th>change-current</th>\n      <th>change-chained</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>0</th>\n      <td>1948</td>\n      <td>274.8</td>\n      <td>2020.0</td>\n      <td>-0.7</td>\n      <td>-0.6</td>\n    </tr>\n    <tr>\n      <th>1</th>\n      <td>1949</td>\n      <td>272.8</td>\n      <td>2008.9</td>\n      <td>10.0</td>\n      <td>8.7</td>\n    </tr>\n    <tr>\n      <th>2</th>\n      <td>1950</td>\n      <td>300.2</td>\n      <td>2184.0</td>\n      <td>15.7</td>\n      <td>8.0</td>\n    </tr>\n    <tr>\n      <th>3</th>\n      <td>1951</td>\n      <td>347.3</td>\n      <td>2360.0</td>\n      <td>5.9</td>\n      <td>4.1</td>\n    </tr>\n    <tr>\n      <th>4</th>\n      <td>1952</td>\n      <td>367.7</td>\n      <td>2456.1</td>\n      <td>6.0</td>\n      <td>4.7</td>\n    </tr>\n  </tbody>\n</table>\n</div>", 
                         "text/plain": "   date  level-current  level-chained  change-current  change-chained\n0  1948          274.8         2020.0            -0.7            -0.6\n1  1949          272.8         2008.9            10.0             8.7\n2  1950          300.2         2184.0            15.7             8.0\n3  1951          347.3         2360.0             5.9             4.1\n4  1952          367.7         2456.1             6.0             4.7"
                     }, 
-                    "execution_count": 5, 
-                    "metadata": {}
+                    "output_type": "execute_result"
                 }
             ], 
-            "execution_count": 5
+            "source": "df.head()"
         }, 
         {
-            "source": "<h3 id=\"Section_2\"> Question 2: Create a dataframe that contains the unemployment data. Display the first five rows of the dataframe. </h3>", 
+            "source": "Create the dataframe that contains Unemployment data", 
             "cell_type": "markdown", 
             "metadata": {}
         }, 
         {
-            "source": "Use the dictionary <code>links</code> and the function <code>pd.read_csv</code> to create a Pandas dataframes that contains the unemployment data.", 
-            "cell_type": "markdown", 
-            "metadata": {}
-        }, 
-        {
-            "source": "du = pd.read_csv(links['unemployment'])", 
+            "execution_count": 6, 
             "cell_type": "code", 
             "metadata": {}, 
             "outputs": [], 
-            "execution_count": 6
+            "source": "du = pd.read_csv(links['unemployment'])"
         }, 
         {
-            "source": "Use the method <code>head()</code> to display the first five rows of the GDP data, then take a screen-shot.", 
+            "source": "Display first five rows of data", 
             "cell_type": "markdown", 
             "metadata": {}
         }, 
         {
-            "source": "du.head()", 
+            "execution_count": 7, 
             "cell_type": "code", 
             "metadata": {}, 
             "outputs": [
                 {
-                    "output_type": "execute_result", 
+                    "execution_count": 7, 
+                    "metadata": {}, 
                     "data": {
                         "text/html": "<div>\n<style scoped>\n    .dataframe tbody tr th:only-of-type {\n        vertical-align: middle;\n    }\n\n    .dataframe tbody tr th {\n        vertical-align: top;\n    }\n\n    .dataframe thead th {\n        text-align: right;\n    }\n</style>\n<table border=\"1\" class=\"dataframe\">\n  <thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>date</th>\n      <th>unemployment</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>0</th>\n      <td>1948</td>\n      <td>3.750000</td>\n    </tr>\n    <tr>\n      <th>1</th>\n      <td>1949</td>\n      <td>6.050000</td>\n    </tr>\n    <tr>\n      <th>2</th>\n      <td>1950</td>\n      <td>5.208333</td>\n    </tr>\n    <tr>\n      <th>3</th>\n      <td>1951</td>\n      <td>3.283333</td>\n    </tr>\n    <tr>\n      <th>4</th>\n      <td>1952</td>\n      <td>3.025000</td>\n    </tr>\n  </tbody>\n</table>\n</div>", 
                         "text/plain": "   date  unemployment\n0  1948      3.750000\n1  1949      6.050000\n2  1950      5.208333\n3  1951      3.283333\n4  1952      3.025000"
                     }, 
-                    "execution_count": 7, 
-                    "metadata": {}
+                    "output_type": "execute_result"
                 }
             ], 
-            "execution_count": 7
+            "source": "du.head()"
         }, 
         {
-            "source": "<h3 id=\"Section_3\">Question 3: Display a dataframe where unemployment was greater than 8.5%. Take a screen-shot.</h3>", 
+            "source": "Dataframe where unemployment rate is Above 8.5", 
             "cell_type": "markdown", 
             "metadata": {}
         }, 
         {
-            "source": "z = du[du['unemployment'] > 8.5]\nz.head()# Type your code here", 
+            "execution_count": 15, 
             "cell_type": "code", 
             "metadata": {}, 
             "outputs": [
                 {
-                    "output_type": "execute_result", 
+                    "execution_count": 15, 
+                    "metadata": {}, 
                     "data": {
                         "text/html": "<div>\n<style scoped>\n    .dataframe tbody tr th:only-of-type {\n        vertical-align: middle;\n    }\n\n    .dataframe tbody tr th {\n        vertical-align: top;\n    }\n\n    .dataframe thead th {\n        text-align: right;\n    }\n</style>\n<table border=\"1\" class=\"dataframe\">\n  <thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>date</th>\n      <th>unemployment</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>34</th>\n      <td>1982</td>\n      <td>9.708333</td>\n    </tr>\n    <tr>\n      <th>35</th>\n      <td>1983</td>\n      <td>9.600000</td>\n    </tr>\n    <tr>\n      <th>61</th>\n      <td>2009</td>\n      <td>9.283333</td>\n    </tr>\n    <tr>\n      <th>62</th>\n      <td>2010</td>\n      <td>9.608333</td>\n    </tr>\n    <tr>\n      <th>63</th>\n      <td>2011</td>\n      <td>8.933333</td>\n    </tr>\n  </tbody>\n</table>\n</div>", 
                         "text/plain": "    date  unemployment\n34  1982      9.708333\n35  1983      9.600000\n61  2009      9.283333\n62  2010      9.608333\n63  2011      8.933333"
                     }, 
-                    "execution_count": 8, 
-                    "metadata": {}
+                    "output_type": "execute_result"
                 }
             ], 
-            "execution_count": 8
+            "source": "z = du[du['unemployment'] > 8.5]\nz.head()"
         }, 
         {
-            "source": "<h3 id=\"Section_4\">Question 4: Use the function make_dashboard to make a dashboard</h3>", 
+            "source": "Create new Dataframe that contains GDP Data", 
             "cell_type": "markdown", 
             "metadata": {}
         }, 
         {
-            "source": "In this section, you will call the function  <code>make_dashboard</code> , to produce a dashboard. We will use the convention of giving each variable the same name as the function parameter.", 
-            "cell_type": "markdown", 
-            "metadata": {}
-        }, 
-        {
-            "source": "Create a new dataframe with the column <code>'date'</code> called <code>x</code> from the dataframe that contains the GDP data.", 
-            "cell_type": "markdown", 
-            "metadata": {}
-        }, 
-        {
-            "source": "x = df[['date']]\nx.head()", 
+            "execution_count": 9, 
             "cell_type": "code", 
             "metadata": {}, 
             "outputs": [
                 {
-                    "output_type": "execute_result", 
+                    "execution_count": 9, 
+                    "metadata": {}, 
                     "data": {
                         "text/html": "<div>\n<style scoped>\n    .dataframe tbody tr th:only-of-type {\n        vertical-align: middle;\n    }\n\n    .dataframe tbody tr th {\n        vertical-align: top;\n    }\n\n    .dataframe thead th {\n        text-align: right;\n    }\n</style>\n<table border=\"1\" class=\"dataframe\">\n  <thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>date</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>0</th>\n      <td>1948</td>\n    </tr>\n    <tr>\n      <th>1</th>\n      <td>1949</td>\n    </tr>\n    <tr>\n      <th>2</th>\n      <td>1950</td>\n    </tr>\n    <tr>\n      <th>3</th>\n      <td>1951</td>\n    </tr>\n    <tr>\n      <th>4</th>\n      <td>1952</td>\n    </tr>\n  </tbody>\n</table>\n</div>", 
                         "text/plain": "   date\n0  1948\n1  1949\n2  1950\n3  1951\n4  1952"
                     }, 
-                    "execution_count": 9, 
-                    "metadata": {}
+                    "output_type": "execute_result"
                 }
             ], 
-            "execution_count": 9
+            "source": "x = df[['date']]\nx.head()"
         }, 
         {
-            "source": "Create a new dataframe with the column <code>'change-current' </code> called <code>gdp_change</code>  from the dataframe that contains the GDP data.", 
+            "source": "New Dataframe with change current", 
             "cell_type": "markdown", 
             "metadata": {}
         }, 
         {
-            "source": "gdp_change = df[['change-current']]\ngdp_change.head()", 
+            "execution_count": 10, 
             "cell_type": "code", 
             "metadata": {}, 
             "outputs": [
                 {
-                    "output_type": "execute_result", 
+                    "execution_count": 10, 
+                    "metadata": {}, 
                     "data": {
                         "text/html": "<div>\n<style scoped>\n    .dataframe tbody tr th:only-of-type {\n        vertical-align: middle;\n    }\n\n    .dataframe tbody tr th {\n        vertical-align: top;\n    }\n\n    .dataframe thead th {\n        text-align: right;\n    }\n</style>\n<table border=\"1\" class=\"dataframe\">\n  <thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>change-current</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>0</th>\n      <td>-0.7</td>\n    </tr>\n    <tr>\n      <th>1</th>\n      <td>10.0</td>\n    </tr>\n    <tr>\n      <th>2</th>\n      <td>15.7</td>\n    </tr>\n    <tr>\n      <th>3</th>\n      <td>5.9</td>\n    </tr>\n    <tr>\n      <th>4</th>\n      <td>6.0</td>\n    </tr>\n  </tbody>\n</table>\n</div>", 
                         "text/plain": "   change-current\n0            -0.7\n1            10.0\n2            15.7\n3             5.9\n4             6.0"
                     }, 
-                    "execution_count": 10, 
-                    "metadata": {}
+                    "output_type": "execute_result"
                 }
             ], 
-            "execution_count": 10
+            "source": "gdp_change = df[['change-current']]\ngdp_change.head()"
         }, 
         {
-            "source": "Create a new dataframe with the column <code>'unemployment' </code> called <code>unemployment</code>  from the dataframe that contains the  unemployment data.", 
+            "source": "Create a new dataframe for unemployment data", 
             "cell_type": "markdown", 
             "metadata": {}
         }, 
         {
-            "source": "unemployment = du[['unemployment']]\nunemployment.head()", 
+            "execution_count": 11, 
             "cell_type": "code", 
             "metadata": {}, 
             "outputs": [
                 {
-                    "output_type": "execute_result", 
+                    "execution_count": 11, 
+                    "metadata": {}, 
                     "data": {
                         "text/html": "<div>\n<style scoped>\n    .dataframe tbody tr th:only-of-type {\n        vertical-align: middle;\n    }\n\n    .dataframe tbody tr th {\n        vertical-align: top;\n    }\n\n    .dataframe thead th {\n        text-align: right;\n    }\n</style>\n<table border=\"1\" class=\"dataframe\">\n  <thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>unemployment</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>0</th>\n      <td>3.750000</td>\n    </tr>\n    <tr>\n      <th>1</th>\n      <td>6.050000</td>\n    </tr>\n    <tr>\n      <th>2</th>\n      <td>5.208333</td>\n    </tr>\n    <tr>\n      <th>3</th>\n      <td>3.283333</td>\n    </tr>\n    <tr>\n      <th>4</th>\n      <td>3.025000</td>\n    </tr>\n  </tbody>\n</table>\n</div>", 
                         "text/plain": "   unemployment\n0      3.750000\n1      6.050000\n2      5.208333\n3      3.283333\n4      3.025000"
                     }, 
-                    "execution_count": 11, 
-                    "metadata": {}
+                    "output_type": "execute_result"
                 }
             ], 
-            "execution_count": 11
+            "source": "unemployment = du[['unemployment']]\nunemployment.head()"
         }, 
         {
-            "source": "Give your dashboard a string title, and assign it to the variable <code>title</code>", 
+            "source": "Title for the dashboard", 
             "cell_type": "markdown", 
             "metadata": {}
         }, 
         {
-            "source": "title = 'Dashboard'", 
+            "execution_count": 12, 
             "cell_type": "code", 
             "metadata": {}, 
             "outputs": [], 
-            "execution_count": 12
+            "source": "title = 'Dashboard'"
         }, 
         {
-            "source": "Finally, the function <code>make_dashboard</code> will output an <code>.html</code> in your direictory, just like a <code>csv</code> file. The name of the file is <code>\"index.html\"</code> and it will be stored in the varable  <code>file_name</code>.", 
+            "source": "Use make dashboard function to output the .html file", 
             "cell_type": "markdown", 
             "metadata": {}
         }, 
         {
-            "source": "file_name = \"index.html\"", 
+            "execution_count": 13, 
             "cell_type": "code", 
             "metadata": {}, 
             "outputs": [], 
-            "execution_count": 13
+            "source": "file_name = \"index.html\""
         }, 
         {
-            "source": "Call the function <code>make_dashboard</code> , to produce a dashboard.  Assign the parameter values accordingly take a the <b>, take a screen shot of the dashboard and submit it</b>.", 
+            "source": "Make dashboard function", 
             "cell_type": "markdown", 
             "metadata": {}
         }, 
         {
-            "source": "# Fill up the parameters in the following function:\nmake_dashboard(x=df[['date']], gdp_change=df[['change-current']], unemployment=du[['unemployment']], title='Dashboard', file_name=\"index.html\")", 
+            "execution_count": 14, 
             "cell_type": "code", 
             "metadata": {}, 
             "outputs": [
@@ -303,7 +268,7 @@
                     }
                 }
             ], 
-            "execution_count": 14
+            "source": "# Fill up the parameters in the following function:\nmake_dashboard(x=df[['date']], gdp_change=df[['change-current']], unemployment=du[['unemployment']], title='Dashboard', file_name=\"index.html\")"
         }
     ], 
     "metadata": {
